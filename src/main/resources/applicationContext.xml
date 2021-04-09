@@ -14,6 +14,11 @@
    		http://www.springframework.org/schema/aop/spring-aop.xsd
         "
 default-autowire="byName">
+    <context:component-scan base-package="house">
+        <context:include-filter type="assignable" expression="house.Material"/>
+        <context:include-filter type="assignable" expression="house.House"/>
+        <context:include-filter type="regex" expression="cities.City"/>
+    </context:component-scan>
 
     <bean
             id="SceneBean"
@@ -113,16 +118,16 @@ default-autowire="byName">
         <constructor-arg value="1"/>
     </bean>
     
-    <bean id="house" class="house.House" init-method="init" autowire="byName">
+<!--    <bean id="house" class="house.House" init-method="init" autowire="byName">
         <property name="name" value="First"/>
-    </bean>
+    </bean>-->
 
-    <bean id="wall" class="house.Wall" autowire-candidate="false">
+<!--    <bean id="brick" class="house.Wall">
         <property name="material" value="brick"/>
-    </bean>
+    </bean>-->
 
-    <bean id="wall2" class="house.Wall">
+<!--    <bean id="logs" class="house.Wall">
         <property name="material" value="logs"/>
-    </bean>
+    </bean>-->
 
 </beans>

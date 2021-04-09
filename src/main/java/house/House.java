@@ -1,21 +1,38 @@
 package house;
 
+import javafx.beans.NamedArg;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
 
 /**
  * @author dmifed
  */
 @Component
 public class House {
-    private Wall wall;
+    @Autowired
+    @Qualifier("logBean")
+    private Material wall;
     private static int ids = 0;
     private int id;
+    @Value("First")
     private String name;
+    @Value("3")
+    private int floors;
 
-    public void setWall(Wall wall) {
+    public void setWall(Material wall) {
         this.wall = wall;
     }
 
+    public void setFloors(int floors) {
+        this.floors = floors;
+    }
+
+    @PostConstruct
     public void init(){
         this.id = ++ids;
         //this.name = "House";
@@ -27,6 +44,15 @@ public class House {
 
     @Override
     public String toString() {
-        return id +"#" + name + " wall: " + wall;
+        return id +"#" + name + " at: " + floors + " floors:";
+    }
+
+    public void buildHouse(){
+        System.out.print(toString() + " ");
+        for(int i = 0; i < floors; i++){
+            System.out.print("floor#" + i + ": ");
+            wall.build();
+        }
+        System.out.println();
     }
 }
